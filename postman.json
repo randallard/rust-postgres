@@ -25,7 +25,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"jury",
@@ -46,7 +46,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"jury",
@@ -67,7 +67,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"healthchecker"
@@ -96,7 +96,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"jury",
@@ -117,7 +117,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"jury",
@@ -179,7 +179,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"jury"
