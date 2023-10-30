@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "9e0f4572-991b-4e89-9d32-8b5c9b225247",
+		"name": "Jury App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Jury",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"part_no\": \"1003\",\r\n    \"pool_no\": \"24030\",\r\n    \"review_type\": \"asdf\",\r\n    \"_status\": \"pending\",\r\n    \"final_decision\": \"approved\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/jury/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"jury",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  Jury (id)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/jury/be66b120-a04f-43eb-8e3f-45b76a623c7b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"jury",
+						"be66b120-a04f-43eb-8e3f-45b76a623c7b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health Checker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/healthchecker",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"healthchecker"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update  Jury",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"part_no\": \"1003\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/jury/be66b120-a04f-43eb-8e3f-45b76a623c7b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"jury",
+						"be66b120-a04f-43eb-8e3f-45b76a623c7b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete  Jury",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/jury/be66b120-a04f-43eb-8e3f-45b76a623c7b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"jury",
+						"be66b120-a04f-43eb-8e3f-45b76a623c7b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jury Pagnation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/notes?page=1&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"notes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jury",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"part_no\": \"1\", \"pool_no\": \"1030\", \"review_type\": \"Admin\", \"_status\": \"pending\", \"final_decision\": \"out\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/api/jury",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"jury"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
