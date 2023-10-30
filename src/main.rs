@@ -19,6 +19,7 @@ pub struct AppState {
     db: Pool<Postgres>,
 }
 
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();

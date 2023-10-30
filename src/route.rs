@@ -19,8 +19,13 @@ use crate::{
     AppState,
 };
 
+async fn index() -> &'static str {
+    "Welcome to the Jury API"
+}
+
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
+        .route("/", get(index))
         .route("/api/healthchecker", get(health_checker_handler))
 
         .route("/api/jury/", post(create_jury_handler))
