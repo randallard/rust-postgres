@@ -15,6 +15,7 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	 "postCreateCommand": "cargo install sqlx-cli --no-default-features --features native-tls,postgres && cargo install cargo-watch systemfd && sqlx migrate run",
 
+
 	// Configure tool-specific properties.
 	// "customizations": {},
 
