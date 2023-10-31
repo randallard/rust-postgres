@@ -9,8 +9,8 @@ use axum::{
 use serde_json::json;
 
 use crate::{
-    model::{JuryModel},
-    schema::{CreateJurySchema, UpdateJurySchema, FilterOptions},
+    model::{JuryModel, UserModel, UserRole},
+    schema::{CreateJurySchema, CreateUserSchema, FilterOptions, UpdateJurySchema},
     AppState,
 };
 
@@ -24,7 +24,6 @@ pub async fn health_checker_handler() -> impl IntoResponse {
 
     Json(json_response)
 }
-
 
 // Jury Admin
 pub async fn jury_list_handler(
@@ -104,7 +103,6 @@ pub async fn create_jury_handler(
         }
     }
 }
-
 
 pub async fn get_jury_handler(
     Path(id): Path<uuid::Uuid>,
@@ -203,4 +201,45 @@ pub async fn delete_jury_handler(
     }
 
     Ok(StatusCode::NO_CONTENT)
+}
+
+pub async fn create_user_handler(
+    State(data): State<Arc<AppState>>,
+    Json(body): Json<CreateUserSchema>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let query_result = sqlx::query_as!(
+        UserModel,
+        r#"INSERT INTO users (username,password_hash,email,user_role) VALUES ($1, $2, $3, $4) RETURNING id,username,password_hash,email,user_role AS "user_role!: UserRole", created_at, updated_at"#,
+        body.username.to_string(),
+        body.password_hash.to_string(),
+        body.email.to_string(),
+        UserRole::User as UserRole
+    )
+    .fetch_one(&data.db)
+    .await;
+
+    match query_result {
+        Ok(jury) => {
+            let jury_response = json!({"status": "success","data": json!({
+                "jury": jury
+            })});
+
+            return Ok((StatusCode::CREATED, Json(jury_response)));
+        }
+        Err(e) => {
+            if e.to_string()
+                .contains("duplicate key value violates unique constraint")
+            {
+                let error_response = serde_json::json!({
+                    "status": "fail",
+                    "message": "jury with that part_no already exists",
+                });
+                return Err((StatusCode::CONFLICT, Json(error_response)));
+            }
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(json!({"status": "error","message": format!("{:?}", e)})),
+            ));
+        }
+    }
 }

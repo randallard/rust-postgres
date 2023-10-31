@@ -1,9 +1,11 @@
 use serde::{Deserialize, Serialize};
 
+use crate::model::UserRole;
+
 #[derive(Deserialize, Debug, Default)]
 pub struct FilterOptions {
     pub page: Option<usize>,
-    pub limit: Option<usize>
+    pub limit: Option<usize>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -28,4 +30,10 @@ pub struct UpdateJurySchema {
     pub _status: Option<String>,
     pub final_decision: Option<String>,
 }
-
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateUserSchema {
+    pub username: String,
+    pub password_hash: String,
+    pub email: String,
+    pub user_role: UserRole,
+}
