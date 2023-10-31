@@ -8,7 +8,7 @@ use axum::{
 use crate::{
     handler::{
         health_checker_handler, 
-
+        create_user_handler,
         get_jury_handler,
         create_jury_handler, 
         delete_jury_handler, 
@@ -26,6 +26,7 @@ async fn index() -> &'static str {
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
         .route("/", get(index))
+        .route("/api/user", post(create_user_handler))
         .route("/api/healthchecker", get(health_checker_handler))
 
         .route("/api/jury/", post(create_jury_handler))
@@ -34,7 +35,7 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
             "/api/jury/:id",
              get(get_jury_handler)
             .patch(edit_jury_handler)
-            .delete(delete_jury_handler),
+            .delete(delete_jury_handler)
         )
         .with_state(app_state)
 }
