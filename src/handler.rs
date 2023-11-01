@@ -249,7 +249,7 @@ pub async fn get_user_handler(
     Path(id): Path<uuid::Uuid>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
-    let query_result = sqlx::query_as!(JuryModel, "SELECT * FROM jury WHERE id = $1", id)
+    let query_result = sqlx::query_as!(UserModel, "SELECT id, username, email, password_hash, created_at, updated_at, user_role AS \"user_role!: UserRole\" FROM users WHERE id = $1", id)
         .fetch_one(&data.db)
         .await;
 

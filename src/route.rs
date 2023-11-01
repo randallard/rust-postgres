@@ -13,8 +13,8 @@ use crate::{
         create_jury_handler, 
         delete_jury_handler, 
         edit_jury_handler,
-        jury_list_handler
-
+        jury_list_handler,
+        get_user_handler
     },
     AppState,
 };
@@ -26,7 +26,9 @@ async fn index() -> &'static str {
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
         .route("/", get(index))
-        .route("/api/user", post(create_user_handler))
+        .route("/api/user/", post(create_user_handler))
+        .route("/api/user", get(get_user_handler))
+
         .route("/api/healthchecker", get(health_checker_handler))
 
         .route("/api/jury/", post(create_jury_handler))
