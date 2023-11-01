@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 use uuid::Uuid;
 
+use crate::enums:: UserRole;
 #[derive(Debug, FromRow, Deserialize, Serialize)]
 #[allow(non_snake_case)]
 pub struct JuryModel {
@@ -15,12 +16,6 @@ pub struct JuryModel {
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(rename = "updatedAt")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
-}
-#[derive(Serialize, Deserialize, Debug, sqlx::Type)]
-#[sqlx(type_name = "user_role", rename_all = "snake_case")]
-pub enum UserRole {
-    Admin,
-    User,
 }
 
 #[derive(Debug, FromRow, Deserialize, Serialize)]

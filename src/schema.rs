@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::model::UserRole;
+use crate::enums::UserRole;
 
 #[derive(Deserialize, Debug, Default)]
 pub struct FilterOptions {

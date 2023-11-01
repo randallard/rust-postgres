@@ -2,7 +2,7 @@ mod handler;
 mod model;
 mod route;
 mod schema;
-
+mod enums;
 use std::sync::Arc;
 
 use axum::http::{
