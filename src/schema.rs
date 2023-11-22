@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::enums::UserRole;
-
 #[derive(Deserialize, Debug, Default)]
 pub struct FilterOptions {
     pub page: Option<usize>,
@@ -35,5 +33,13 @@ pub struct CreateUserSchema {
     pub username: String,
     pub password_hash: String,
     pub email: String,
-    pub user_role: UserRole,
+    pub user_role: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct UpdateUserSchema {
+    pub username: Option<String>,
+    pub password_hash: Option<String>,
+    pub email: Option<String>,
+    pub user_role: Option<String>,
 }

@@ -1,8 +1,8 @@
+mod enums;
 mod handler;
 mod model;
 mod route;
 mod schema;
-mod enums;
 use std::sync::Arc;
 
 use axum::http::{
@@ -18,7 +18,6 @@ use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 pub struct AppState {
     db: Pool<Postgres>,
 }
-
 
 #[tokio::main]
 async fn main() {

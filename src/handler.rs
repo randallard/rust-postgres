@@ -1,5 +1,11 @@
 use std::sync::Arc;
 
+use crate::enums::UserRole;
+use crate::{
+    model::{JuryModel, UserModel},
+    schema::{CreateJurySchema, CreateUserSchema, FilterOptions, UpdateJurySchema},
+    AppState,
+};
 use axum::{
     extract::{Path, Query, State},
     http::StatusCode,
@@ -7,12 +13,6 @@ use axum::{
     Json,
 };
 use serde_json::json;
-use crate::enums::UserRole;
-use crate::{
-    model::{JuryModel, UserModel},
-    schema::{CreateJurySchema, CreateUserSchema, FilterOptions, UpdateJurySchema},
-    AppState,
-};
 
 pub async fn health_checker_handler() -> impl IntoResponse {
     const MESSAGE: &str = "Healthy";
@@ -107,6 +107,7 @@ pub async fn create_jury_handler(
 pub async fn get_jury_handler(
     Path(id): Path<uuid::Uuid>,
     State(data): State<Arc<AppState>>,
+    Json(_body): Json<UpdateJurySchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let query_result = sqlx::query_as!(JuryModel, "SELECT * FROM jury WHERE id = $1", id)
         .fetch_one(&data.db)
@@ -219,12 +220,12 @@ pub async fn create_user_handler(
     .await;
 
     match query_result {
-        Ok(jury) => {
-            let jury_response = json!({"status": "success","data": json!({
-                "jury": jury
+        Ok(user) => {
+            let user_response = json!({"status": "success","data": json!({
+                "user": user
             })});
 
-            return Ok((StatusCode::CREATED, Json(jury_response)));
+            return Ok((StatusCode::CREATED, Json(user_response)));
         }
         Err(e) => {
             if e.to_string()
@@ -232,7 +233,7 @@ pub async fn create_user_handler(
             {
                 let error_response = serde_json::json!({
                     "status": "fail",
-                    "message": "jury with that part_no already exists",
+                    "message": "user with that part_no already exists",
                 });
                 return Err((StatusCode::CONFLICT, Json(error_response)));
             }
@@ -244,7 +245,6 @@ pub async fn create_user_handler(
     }
 }
 
-
 pub async fn get_user_handler(
     Path(id): Path<uuid::Uuid>,
     State(data): State<Arc<AppState>>,
@@ -254,22 +254,19 @@ pub async fn get_user_handler(
         .await;
 
     match query_result {
-        Ok(jury) => {
-            let jury_response = serde_json::json!({"status": "success","data": serde_json::json!({
-                "jury": jury
+        Ok(user) => {
+            let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
+                "user": user
             })});
 
-            return Ok(Json(jury_response));
+            return Ok(Json(user_response));
         }
         Err(_) => {
             let error_response = serde_json::json!({
                 "status": "fail",
-                "message": format!("Jury with ID: {} not found", id)
+                "message": format!("User with ID: {} not found", id)
             });
             return Err((StatusCode::NOT_FOUND, Json(error_response)));
         }
     }
 }
-
-
-
